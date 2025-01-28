@@ -13,14 +13,16 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define DEF_BUFFER 1024
+# define BUFFER_SIZE 42
 
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
+void	ft_putstr_fd(char *s, int fd);
 
 #endif

@@ -23,6 +23,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
+char	*ft_strchr(const char *s, int c);
 void	ft_putstr_fd(char *s, int fd);
 
 #endif

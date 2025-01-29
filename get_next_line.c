@@ -17,6 +17,8 @@ char	*get_next_line(int fd)
 	size_t	bytesread;
 	char	*buffer;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+        return (NULL);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
@@ -26,7 +28,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	bytesread = read(fd, buffer, BUFFER_SIZE);
-	while (bytesread > 0)
+	while (bytesread > 0 && !ft_strchr(buffer, '\n'))
 	{
 		buffer[bytesread] = '\0';
 		bytesread = read(fd, buffer, BUFFER_SIZE);
@@ -36,5 +38,22 @@ char	*get_next_line(int fd)
 
 int	main(int ac, char **av)
 {
-	return (0);
+	int fd;
+    char *line;
+
+    fd = open(av[1], O_RDONLY);
+    if (fd == -1)
+    {
+        perror("Error opening file");
+        return (1);
+    }
+
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s", line);
+        free(line);
+    }
+
+    close(fd);
+    return (0);
 }

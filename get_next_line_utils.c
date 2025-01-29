@@ -23,3 +23,16 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((unsigned char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}

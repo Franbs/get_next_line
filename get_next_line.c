@@ -12,48 +12,85 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*ft_updatestored(char *stored, int i)
+{
+	char	*new;
+
+	if (stored[i] == '\n')
+		new = ft_strdup(&stored[i + 1]);
+	else
+		new = NULL;
+	free(stored);
+	return (new);
+}
+
+char	*ft_getline(char **stored)
+{
+	size_t	i;
+	size_t	l;
+	char	*tmp;
+
+	i = 0;
+	while ((*stored)[i] != '\n' && (*stored)[i])
+		i++;
+	if ((*stored)[i] == '\n')
+		tmp = (char *)malloc(sizeof(char) * (i + 2));
+	else
+		tmp = (char *)malloc(sizeof(char) * (i + 1));
+	l = 0;
+	while (tmp[l] && l < i)
+	{
+		tmp[l] = (*stored)[l];
+		l++;
+	}
+	if ((*stored)[i] == '\n')
+	{
+		tmp[l] = '\n';
+		l++;
+	}
+	tmp[l] = '\0';
+	*stored = ft_updatestored(*stored, i);
+	return (tmp);
+}
+
+static char	*ft_read(int fd, char *stored)
 {
 	size_t	bytesread;
 	char	*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	if (fd == -1)
-	{
-		ft_putstr_fd("Cannot read file.\n", 1);
-		return (NULL);
-	}
 	bytesread = read(fd, buffer, BUFFER_SIZE);
 	while (bytesread > 0 && !ft_strchr(buffer, '\n'))
 	{
 		buffer[bytesread] = '\0';
+		stored = ft_strjoin(stored, buffer);
+		if (!stored)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		bytesread = read(fd, buffer, BUFFER_SIZE);
 	}
-	return (buffer);
+	free(buffer);
+	return (stored);
 }
 
-int	main(int ac, char **av)
+char	*get_next_line(int fd)
 {
-	int fd;
-    char *line;
+	static char	*stored;
 
-    fd = open(av[1], O_RDONLY);
-    if (fd == -1)
-    {
-        perror("Error opening file");
-        return (1);
-    }
-
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s", line);
-        free(line);
-    }
-
-    close(fd);
-    return (0);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	stored = ft_read(fd, stored);
+	if (!stored)
+		return (NULL);
+	if (*stored == '\0')
+	{
+		free(stored);
+		stored = NULL;
+		return (NULL);
+	}
+	return (ft_getline(&stored));
 }

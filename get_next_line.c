@@ -75,23 +75,17 @@ void	ft_read(int fd, char **stored)
 	if (!buffer)
 		return ;
 	bytesread = read(fd, buffer, BUFFER_SIZE);
-	while (bytesread > 0 && !ft_strchr(buffer, '\n'))
+	while (bytesread > 0)
 	{
 		buffer[bytesread] = '\0';
 		ft_addstr(stored, buffer);
 		if (!*stored)
-		{
-			free(buffer);
-			return ;
-		}
+			break ;
+		if (ft_strchr(buffer, '\n'))
+			break ;
 		bytesread = read(fd, buffer, BUFFER_SIZE);
 	}
-	if (bytesread > 0)
-	{
-		buffer[bytesread] = '\0';
-		ft_addstr(stored, buffer);
-	}
-	else if (bytesread == -1)
+	if (bytesread == -1)
 	{
 		free(*stored);
 		*stored = NULL;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbanzo-s <fbanzo-s@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 20:56:53 by fbanzo-s          #+#    #+#             */
-/*   Updated: 2025/01/27 20:56:53 by fbanzo-s         ###   ########.fr       */
+/*   Created: 2025/02/05 22:39:32 by fbanzo-s          #+#    #+#             */
+/*   Updated: 2025/02/05 22:39:32 by fbanzo-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,45 @@ size_t	ft_strlen(const char *str)
 	while (str[l])
 		l++;
 	return (l);
+}
+
+char	*ft_strncpy(char *dest, char *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
+
+char	*ft_strcat(char *dest, char *src)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (dest[i])
+	{
+		i++;
+	}
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		j++;
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -55,33 +94,4 @@ char	*ft_strdup(const char *s)
 	}
 	dup[i] = '\0';
 	return (dup);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*joined;
-	size_t	i;
-	size_t	j;
-
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	joined = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!joined)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		joined[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j])
-	{
-		joined[i + j] = s2[j];
-		j++;
-	}
-	joined[i + j] = '\0';
-	return (joined);
 }

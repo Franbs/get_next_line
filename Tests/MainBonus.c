@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   MainBonus.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mvillavi <mvillavi@student.42barcelon      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 17:35:34 by mvillavi          #+#    #+#             */
-/*   Updated: 2025/01/24 13:25:13 by mvillavi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-//This is the main for testing the bonus of the project
 #include <fcntl.h>
 #include <stdio.h>
 #include "../get_next_line_bonus.h"
